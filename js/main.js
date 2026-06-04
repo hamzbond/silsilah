@@ -31,6 +31,7 @@ class Application {
 
             // Wire view toggle UI
             this._wireViewToggle();
+            this.viewMode = localStorage.getItem('viewMode') || 'tree';
 
             // Setup tree node click handlers
             treeManager.onNodeClick((nodeId) => {
@@ -54,17 +55,27 @@ class Application {
     }
 
     _wireViewToggle() {
+        const treeBtn = document.getElementById('viewTreeBtn');
         const cardsBtn = document.getElementById('viewCardsBtn');
         const listBtn = document.getElementById('viewListBtn');
-        if (!cardsBtn || !listBtn) return;
+        if (!cardsBtn || !listBtn || !treeBtn) return;
 
         const setActive = (mode) => {
+            treeBtn.classList.toggle('active', mode === 'tree');
             cardsBtn.classList.toggle('active', mode === 'cards');
             listBtn.classList.toggle('active', mode === 'list');
         };
 
-        // Initial state
         setActive(this.viewMode);
+
+        // Tambahkan event listener untuk Tree
+        treeBtn.addEventListener('click', async () => {
+            if (this.viewMode === 'tree') return;
+            this.viewMode = 'tree';
+            localStorage.setItem('viewMode', this.viewMode);
+            setActive(this.viewMode);
+            await treeManager.initializeTree(this.data, this.viewMode);
+        });
 
         cardsBtn.addEventListener('click', async () => {
             if (this.viewMode === 'cards') return;

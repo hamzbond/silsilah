@@ -15,29 +15,23 @@ class TreeManager {
      */
     transformData(data) {
         console.log('Transforming data for BALKAN...');
-        
         const balkanData = [];
         
         for (const person of data) {
             const node = {
                 id: person.id,
-                pid: person.pids.length > 0 ? person.pids.map(pid => ({ id: pid })) : [],
+                pids: person.pids, // Menggunakan array person.pids langsung
                 mid: person.mid ? person.mid : null,
                 fid: person.fid ? person.fid : null,
                 name: person.name,
                 gender: person.gender,
                 image: person.photo || this._getDefaultImage(person.gender),
                 
-                // Additional data for modal
-                panggilan: person.panggilan,
-                bdate: person.bdate,
-                lokasi: person.lokasi
+                // Kolom kustom untuk template BALKAN 'hugo'
+                subtitle: person.bdate ? `Lahir: ${new Date(person.bdate).getFullYear()}` : (person.panggilan || '')
             };
-            
             balkanData.push(node);
         }
-        
-        console.log('Data transformed for BALKAN');
         return balkanData;
     }
 
@@ -316,26 +310,30 @@ class TreeManager {
         const cards = [];
         for (const person of data) {
             const genderClass = person.gender === 'female' ? 'female' : 'male';
-            const img = person.photo || this._getDefaultImage(person.gender);
-            const year = person.bdate ? (new Date(person.bdate).getFullYear() || '') : '';
+            const fallbackImg = this._getDefaultImage(person.gender);
+            const imgSrc = person.photo ? person.photo : fallbackImg;
+            
+            const age = dataManager.calculateAge(person.bdate);
+            const year = person.bdate ? new Date(person.bdate).getFullYear() : '-';
+            const ageText = age !== null ? `(${age} thn)` : '';
+            
             const card = `
                 <div class="person-card ${genderClass}" data-id="${person.id}" onclick="modalManager.openModal('${person.id}')">
-                    <div class="person-avatar"><img class="avatar-img" src="${img}" alt="${this._escapeHtml(person.name)}"></div>
-                    <div class="person-info">
-                        <div class="person-name">${this._escapeHtml(person.name)}</div>
-                        <div class="person-year">${year}</div>
+                    <div class="person-avatar">
+                        <img class="avatar-img" src="${imgSrc}" onerror="this.src='${fallbackImg}'" alt="${this._escapeHtml(person.name)}">
                     </div>
-                    <div class="person-actions">
-                        <button class="small-icon" title="Foto">📷</button>
-                        <button class="small-icon" title="Edit">✎</button>
+                    <div class="person-info">
+                        <div class="person-name" style="font-size: 1.05rem; margin-bottom: 4px;">${this._escapeHtml(person.name)}</div>
+                        <div class="person-year" style="color: #6b7280; font-size: 0.85rem; line-height: 1.4;">
+                            ${person.panggilan ? `<span style="font-style: italic;">"${this._escapeHtml(person.panggilan)}"</span><br>` : ''}
+                            📅 ${year} ${ageText}
+                        </div>
                     </div>
                 </div>
             `;
             cards.push(card);
         }
-
-        const html = `<div class="card-grid">${cards.join('')}</div>`;
-        this.treeContainer.innerHTML = html;
+        this.treeContainer.innerHTML = `<div class="card-grid">${cards.join('')}</div>`;
     }
 
     /**
