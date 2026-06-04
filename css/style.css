@@ -1,0 +1,712 @@
+/* ===========================
+   SILSILAH KELUARGA - Stylesheet
+   Minimal / Clean Design
+   =========================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Color Palette */
+    --primary-blue: #2563eb;
+    --primary-pink: #ec4899;
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --bg-light: #f9fafb;
+    --bg-white: #ffffff;
+    --border-color: #e5e7eb;
+    --error-color: #dc2626;
+    --success-color: #16a34a;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    
+    /* Typography */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    
+    /* Border Radius */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-full: 9999px;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: var(--font-family);
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    overflow: hidden;
+}
+
+/* ===== HEADER ===== */
+.header {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, #1d4ed8 100%);
+    color: white;
+    padding: var(--spacing-lg) var(--spacing-md);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    z-index: 100;
+}
+
+.header-content h1 {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+}
+
+.header-content p {
+    font-size: var(--font-size-sm);
+    opacity: 0.9;
+}
+
+/* ===== SEARCH CONTAINER ===== */
+.search-container {
+    background: white;
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    gap: var(--spacing-sm);
+    position: relative;
+    z-index: 50;
+}
+
+.search-input {
+    flex: 1;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-base);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.search-input:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.search-input::placeholder {
+    color: var(--text-light);
+}
+
+.search-clear {
+    background: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    cursor: pointer;
+    font-size: var(--font-size-xl);
+    color: var(--text-light);
+    transition: all 0.2s ease;
+    display: none;
+}
+
+.search-clear:hover {
+    background: var(--border-color);
+    color: var(--text-dark);
+}
+
+.search-clear.active {
+    display: block;
+}
+
+/* ===== MAIN CONTENT ===== */
+.main-content {
+    flex: 1;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    height: calc(100vh - 140px); /* Header + Search */
+}
+
+.tree-container {
+    width: 100%;
+    height: 100%;
+    background: white;
+    position: relative;
+    overflow: auto;
+}
+
+/* ===== LOADING INDICATOR ===== */
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: var(--spacing-lg);
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--border-color);
+    border-top-color: var(--primary-blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading p {
+    color: var(--text-light);
+    font-size: var(--font-size-base);
+}
+
+.loading-text {
+    color: var(--text-light);
+    font-size: var(--font-size-sm);
+    text-align: center;
+}
+
+/* ===== ERROR CONTAINER ===== */
+.error-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: var(--bg-light);
+}
+
+.error-content {
+    background: white;
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+    max-width: 400px;
+}
+
+.error-content h2 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-md);
+    color: var(--error-color);
+}
+
+.error-content p {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.6;
+}
+
+.error-content button {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.error-content button:hover {
+    background: #1d4ed8;
+    box-shadow: var(--shadow-md);
+}
+
+/* ===== BIRTHDAY WIDGET ===== */
+.birthday-widget {
+    position: fixed;
+    top: 130px; /* Below header + search */
+    right: var(--spacing-md);
+    width: 280px;
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    z-index: 40;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 400px;
+}
+
+.birthday-header {
+    background: linear-gradient(135deg, var(--primary-pink) 0%, #be185d 100%);
+    color: white;
+    padding: var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.birthday-header h3 {
+    font-size: var(--font-size-lg);
+    margin: 0;
+}
+
+.widget-collapse-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: var(--font-size-lg);
+    transition: all 0.2s ease;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.widget-collapse-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.birthday-list {
+    padding: var(--spacing-md);
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.birthday-item {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.birthday-item:last-child {
+    border-bottom: none;
+}
+
+.birthday-item-text {
+    flex: 1;
+}
+
+.birthday-name {
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: var(--font-size-base);
+}
+
+.birthday-date {
+    color: var(--text-light);
+    font-size: var(--font-size-sm);
+}
+
+.birthday-emoji {
+    font-size: 1.5rem;
+}
+
+.birthday-widget.collapsed {
+    max-height: 60px;
+}
+
+.birthday-widget.collapsed .birthday-list {
+    display: none;
+}
+
+/* ===== PROFILE MODAL ===== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    position: relative;
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-close {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    background: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: var(--font-size-xl);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.modal-close:hover {
+    background: var(--border-color);
+}
+
+.modal-body {
+    padding: var(--spacing-xl);
+    padding-top: var(--spacing-2xl);
+}
+
+/* Profile Header */
+.profile-header {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    align-items: flex-start;
+}
+
+.profile-photo-container {
+    flex-shrink: 0;
+}
+
+.profile-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-lg);
+    background: var(--bg-light);
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+}
+
+.profile-photo.male-default {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, #1d4ed8 100%);
+}
+
+.profile-photo.female-default {
+    background: linear-gradient(135deg, var(--primary-pink) 0%, #be185d 100%);
+}
+
+.profile-name-section h2 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-dark);
+}
+
+.profile-panggilan {
+    color: var(--text-light);
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-sm);
+}
+
+.profile-gender {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: var(--bg-light);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    color: var(--text-light);
+}
+
+/* Profile Info Sections */
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.info-section h4 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
+    color: var(--text-dark);
+}
+
+.info-section p {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+}
+
+.info-section p:last-child {
+    margin-bottom: 0;
+}
+
+.info-label {
+    font-weight: 600;
+    color: var(--text-dark);
+    white-space: nowrap;
+}
+
+.info-value {
+    color: var(--text-light);
+    flex: 1;
+}
+
+#parentsSection, #partnersSection, #childrenSection {
+    margin-top: var(--spacing-md);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    background: white;
+    border-top: 1px solid var(--border-color);
+    padding: var(--spacing-md);
+    text-align: center;
+    color: var(--text-light);
+    font-size: var(--font-size-sm);
+}
+
+/* ===== BALKAN TREE CUSTOMIZATION ===== */
+/* Override BALKAN default styles for minimal design */
+
+.fTreeImg {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.fTreeImg:hover {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+/* Node styling */
+.fTree .node {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.fTree .node:hover {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+/* Node highlight (search result) */
+.fTree .node.highlighted {
+    filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.5));
+}
+
+/* Male node color */
+.fTree .node.male {
+    background: var(--primary-blue) !important;
+}
+
+/* Female node color */
+.fTree .node.female {
+    background: var(--primary-pink) !important;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* ===== VIEW TOGGLE ===== */
+.view-toggle {
+    margin-top: 8px;
+    display: inline-flex;
+    gap: 8px;
+}
+
+.toggle-btn {
+    background: rgba(255,255,255,0.08);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.toggle-btn.active {
+    background: white;
+    color: var(--text-dark);
+    border-color: var(--border-color);
+}
+
+/* ===== CARD / GRID VIEW ===== */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 18px;
+    padding: 24px;
+}
+
+.person-card {
+    background: white;
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 2px solid transparent;
+    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+
+.person-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.person-card .person-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--bg-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.person-card img.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.person-info {
+    flex: 1;
+}
+
+.person-name {
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.person-year {
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+.person-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.person-card.male { border-color: rgba(37,99,235,0.15); }
+.person-card.female { border-color: rgba(236,72,153,0.12); }
+.person-card.highlighted { box-shadow: 0 6px 18px rgba(37,99,235,0.15); border-color: rgba(37,99,235,0.6); }
+
+/* Small screen adjustments for grid */
+@media (max-width: 600px) {
+    .card-grid { grid-template-columns: repeat(2, 1fr); padding: 12px; gap: 12px; }
+    .person-card { padding: 10px; }
+}
+
+@media (max-width: 768px) {
+    .header-content h1 {
+        font-size: var(--font-size-xl);
+    }
+
+    .search-container {
+        padding: var(--spacing-sm);
+    }
+
+    .search-input {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+
+    .birthday-widget {
+        width: 100%;
+        max-width: 260px;
+        top: auto;
+        bottom: var(--spacing-md);
+        right: var(--spacing-md);
+    }
+
+    .modal-content {
+        width: 95%;
+        max-height: 90vh;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-photo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-name-section h2 {
+        font-size: var(--font-size-lg);
+    }
+
+    .info-section p {
+        flex-direction: column;
+    }
+
+    .info-label {
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .main-content {
+        height: calc(100vh - 130px);
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --spacing-md: 0.75rem;
+        --spacing-lg: 1rem;
+    }
+
+    .header {
+        padding: var(--spacing-md);
+    }
+
+    .header-content h1 {
+        font-size: var(--font-size-lg);
+    }
+
+    .header-content p {
+        display: none;
+    }
+
+    .search-input {
+        font-size: 16px;
+    }
+
+    .birthday-widget {
+        max-width: 240px;
+    }
+
+    .modal-body {
+        padding: var(--spacing-lg);
+        padding-top: var(--spacing-xl);
+    }
+
+    .profile-photo {
+        width: 80px;
+        height: 80px;
+    }
+
+    .profile-name-section h2 {
+        font-size: var(--font-size-base);
+    }
+}

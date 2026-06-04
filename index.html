@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Website Pohon Silsilah Keluarga - Interactive Family Tree">
+    <meta name="theme-color" content="#2563eb">
+    
+    <title>Silsilah Keluarga - Family Tree</title>
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- BALKAN FamilyTree JS CSS (optional, can use default) -->
+    <!-- <link rel="stylesheet" href="https://balkan.app/FamilyTreeJS/css/style.css"> -->
+    
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">🌳 Silsilah Keluarga</h1>
+            <p class="header-subtitle">Interactive Family Tree</p>
+            <div class="view-toggle" id="viewToggle">
+                <button id="viewCardsBtn" class="toggle-btn" title="Tampilan Utama">Tampilan Utama</button>
+                <button id="viewListBtn" class="toggle-btn" title="Tampilan Daftar">List</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input 
+            type="text" 
+            id="searchInput" 
+            class="search-input" 
+            placeholder="Cari nama anggota keluarga..." 
+            autocomplete="off"
+        >
+        <button id="clearSearchBtn" class="search-clear" title="Clear search">×</button>
+    </div>
+
+    <!-- Main Tree Container -->
+    <main class="main-content">
+        <div id="treeContainer" class="tree-container">
+            <div class="loading" id="loadingIndicator">
+                <div class="spinner"></div>
+                <p>Loading family tree...</p>
+            </div>
+        </div>
+
+        <!-- Error Message Container (hidden by default) -->
+        <div id="errorContainer" class="error-container" style="display: none;">
+            <div class="error-content">
+                <h2>⚠️ Error Loading Data</h2>
+                <p id="errorMessage"></p>
+                <button onclick="location.reload()">Try Again</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Birthday Widget (Top Right Corner) -->
+    <aside class="birthday-widget" id="birthdayWidget">
+        <div class="birthday-header">
+            <h3>🎂 Ulang Tahun Bulan Ini</h3>
+            <button class="widget-collapse-btn" id="widgetCollapseBtn" title="Toggle widget">−</button>
+        </div>
+        <div class="birthday-list" id="birthdayList">
+            <p class="loading-text">Loading...</p>
+        </div>
+    </aside>
+
+    <!-- Profile Detail Modal -->
+    <div id="profileModal" class="modal" style="display: none;">
+        <div class="modal-backdrop" id="modalBackdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalCloseBtn">×</button>
+            
+            <div class="modal-body">
+                <!-- Profile Header -->
+                <div class="profile-header">
+                    <div class="profile-photo-container">
+                        <img id="profilePhoto" class="profile-photo" src="" alt="Profile Photo">
+                    </div>
+                    <div class="profile-name-section">
+                        <h2 id="profileName"></h2>
+                        <p id="profilePanggilan" class="profile-panggilan"></p>
+                        <p id="profileGender" class="profile-gender"></p>
+                    </div>
+                </div>
+
+                <!-- Profile Info -->
+                <div class="profile-info">
+                    <div class="info-section">
+                        <h4>📍 Informasi</h4>
+                        <div id="profileInfoContent">
+                            <p id="profileBdate"><span class="info-label">Tanggal Lahir:</span> <span id="bdateValue">-</span></p>
+                            <p id="profileLokasi"><span class="info-label">Lokasi:</span> <span id="lokasiValue">-</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Relationships -->
+                    <div class="info-section">
+                        <h4>👨‍👩‍👧‍👦 Keluarga</h4>
+                        <div id="profileRelationships">
+                            <div id="parentsSection" style="display: none;">
+                                <p><span class="info-label">Orang Tua:</span> <span id="parentsList">-</span></p>
+                            </div>
+                            <div id="partnersSection" style="display: none;">
+                                <p><span class="info-label">Pasangan:</span> <span id="partnersList">-</span></p>
+                            </div>
+                            <div id="childrenSection" style="display: none;">
+                                <p><span class="info-label">Anak:</span> <span id="childrenList">-</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Data Source: Google Sheets | Last Updated: <span id="lastUpdated">Loading...</span></p>
+    </footer>
+
+    <!-- CDN Libraries (IMPORTANT: Order matters) -->
+    
+    <!-- PapaParse - CSV Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    
+    <!-- BALKAN FamilyTree JS - Tree Visualization (from jsDelivr CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/balkan@1.29.0/FamilyTree.min.js"></script>
+    
+    <!-- Local JavaScript Modules -->
+    <script src="js/data.js"></script>
+    <script src="js/tree.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/birthday.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>
